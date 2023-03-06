@@ -1,9 +1,10 @@
-package method2;
+package method02;
 
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class MemberMain {
+
 	public static void main(String[] args) {
 		/*
 		 * HashMap을 사용하여 회원 정보 만들기. HashMap을 두 개 만들어서 구성하기. 
@@ -38,48 +39,29 @@ public class MemberMain {
 				System.out.print("아이디 : "); id = sc.next();
 				System.out.print("비밀번호 : "); password = sc.next();
 				System.out.print("이름 : "); name = sc.next();
-				insert(id, password, name);
+				Member.insert(id, password, name);
 				break;
 			case "2": 
 				System.out.print("아이디 : "); id = sc.next();
-				if(passwords.containsKey(id) == false) {
-					System.out.println("등록되지 않은 아이디입니다.");
-				}else {
-					System.out.println("## 회원 검색 결과 ##");
-					System.out.println("아이디 : " + id);
-					System.out.println("비밀번호 : " + passwords.get(id));
-					System.out.println("이름 : " + names.get(id));
-				}
-				System.out.println();
+				Member.selectId(id);
 				break;
 			case "3": 
 				System.out.print("아이디 : "); id = sc.next();
-				if(passwords.containsKey(id) == false) {
-					System.out.println("등록되지 않은 아이디입니다.");
-				}else {
-					names.remove(id);
-					passwords.remove(id);
-					System.out.println(id + " 계정 정보 삭제 완료");
-				}
-				System.out.println();
+				Member.delete(id);
 				break;
 			case "4": 
-					for(String key : names.keySet()) {
-						System.out.println("아이디 : " + key);
-						System.out.println("비밀번호 : " + passwords.get(key));
-						System.out.println("이름 : " + names.get(key));
-						System.out.println();
-					}
+					Member.selectAll();
 				break;
 			case "5": 
 				System.out.print("아이디 : "); id = sc.next();
-				if(passwords.containsKey(id) == false) {
+				/*if(passwords.containsKey(id) 1== false) {
 					System.out.println("등록되지 않은 아이디입니다.");
 				}else {
 					System.out.print("새로운 비밀번호 : ");
 					passwords.put(id, sc.next());
 					System.out.println("비밀번호가 수정되었습니다.");
-				}
+				}*/
+				Member.update(id);
 				System.out.println();
 				break;
 			case "6" : System.out.println("프로그램을 종료합니다."); System.exit(0);
@@ -87,4 +69,5 @@ public class MemberMain {
 			}
 		}
 	}
+
 }
