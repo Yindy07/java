@@ -1,0 +1,76 @@
+select id, name, pw from test;
+
+select id, pw from test;
+
+SELECT id, pw FROM test WHERE id='admin';
+
+SELECT pw FROM test WHERE id='admin';
+select * from test where id='user1';
+
+select count(*) as total_member from test;--테스트 테이블의 행의 개수를 확인하는 명령 , as 컬럼명 변경할 이름
+ 
+select max(cost) from test;--max() : 컬럼에 있는 값중 최댓값을 얻는 함수
+select min(cost) from test;-- min: 컬럼에 있는 값중 최솟값을 얻는 함수
+select avg(cost) from test;--avg : 평균값 
+select nvl(count(*),0) from test; --nvl : 카운트 값이 null값이면 0을 반환
+Update test set pw='1234' Where id='user1';
+select rownum as RN, id, pw, name from test; --rownum : 행 번호를 알 수 있는 함수 (숫자의 연속성을 위해 사용)
+insert into test values('user1', '1111', '유저1',test_seq.nextval);
+insert into test values('user2', '2222', '유저2',0);
+insert into test values('user3', '2323', '유저3');
+insert into test values('test1', 'test1', '테스트1');
+insert into test values('test2', 'test2', '테스트2');
+--like %찾는 값% : 찾는값으로 시작하거나 끝나는 값들을 다 찾을 때
+select rownum as rn , id, pw, name 
+from test 
+where id like '%2%' 
+order by rn desc; -- order by desc :내림차순 esc오름차순
+
+select rownum as rn , id, pw, name 
+from test 
+where rn >=4 and rn <=6 --where절에서 다이렉트로 rn 식별 불가
+order by rn desc;
+
+Select AA.* 
+From (Select Rownum as rn , id, pw, name From test Order by rn desc)AA -- AA안에 있는 모든 컬럼을 본다. | 서브쿼리
+Where AA.rn >=4 And AA.rn <=6;
+
+desc test;
+
+Alter Table test ADD email varchar2(20);
+Alter Table test ADD num number;
+Update test Set num=0, email=' ';
+Select * From test;
+Alter Table test Modify email varchar2(200);
+
+Alter Table test Drop Column email;
+desc test;
+
+Alter Table test Rename Column num To member_num;
+desc test;
+--Sequence : 순서를 만들 때 사용
+Create Sequence test_seq Increment By 1 Start With 1; -- 1부터 시작해서 1씩 증가
+Select * From test;
+Insert Into test Values('test3', '3333', '테스트3', test_seq.nextval);
+Insert Into test Values('test4', '4444', '테스트4', test_seq.nextval);
+Insert Into test Values('test5', '5555', '테스트5', test_seq.nextval);
+
+Create TABLE db_concept(
+member_num number, email varchar2(45), name varchar2(30), mobile number(15), 
+primary key(email)
+);
+delete from db_concept;
+Select * From db_concept3;
+
+Select nvl(max(member_num), 0)+1 as max_num From db_concept; --맨 처음 숫자가 null일 경우 다음 값 반환 시퀀스 대신 사용
+/*
+값이 NULL인 경우 지정값을 출력하고, NULL이 아니면 원래 값을 그대로 출력한다.*/
+
+
+Create TABLE db_concept3(
+member_num number, id varchar2(50), pw varchar2(50), name number(30), email varchar2(50), 
+primary key(id)
+);
+
+Alter Table db_concept3 Modify name varchar2(50);
+commit;
